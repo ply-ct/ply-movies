@@ -4,10 +4,11 @@ import * as bodyParser from 'body-parser';
 import { StatusResponse } from './response';
 import { MoviesService } from './service';
 import { Query } from './query';
+import { MovieValidator, ValidationError } from './validate';
 
 export namespace server {
     const app = express();
-    const port = process.env.SERVER_PORT || 3000;
+    const port = parseInt(process.env.SERVER_PORT || '3000');
 
     app.use(bodyParser.json());
     app.set('json spaces', process.env.RESPONSE_SPACES || 0);
@@ -37,7 +38,24 @@ export namespace server {
     app.get('*', notFound);
 
     app.post('/movies', async (request, response) => {
-
+        try {
+            let movie = new MovieValidator(request.body).validate();
+            await MoviesService.createMovie(movie);
+            console.log(`Movie created with id: ${movie.id}`);
+            let base = request.protocol + '://' + request.get('host');
+            if (port !== 80 && port !== 443) {
+                base += ':' + port;
+            }
+            response.set('Location', `${base}/movies/${movie.id}`);
+            response.status(201).send(movie);
+        } catch (error) {
+            if (error instanceof ValidationError) {
+                response.status(400).send(new StatusResponse(400, error.message));
+            } else {
+                console.error(error);
+                response.status(500).send(new StatusResponse(500, `Server Error: ${error.message}`));
+            }
+        }
     });
     app.post('*', notFound);
 

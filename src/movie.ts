@@ -128,13 +128,13 @@ export class MovieMatcher {
     }
 
     private matchNumber(filterVal: string, value: number): boolean {
-        if (filterVal.startsWith("<=")) {
+        if (filterVal.startsWith('<=')) {
             return filterVal.length > 2 && parseFloat(filterVal.substring(2)) >= value;
-        } else if (filterVal.startsWith("<")) {
+        } else if (filterVal.startsWith('<')) {
             return filterVal.length > 1 && parseFloat(filterVal.substring(1)) > value;
-        } else if (filterVal.startsWith(">=")) {
+        } else if (filterVal.startsWith('>=')) {
             return filterVal.length > 2 && parseFloat(filterVal.substring(2)) <= value;
-        } else if (filterVal.startsWith(">")) {
+        } else if (filterVal.startsWith('>')) {
             return filterVal.length > 1 && parseFloat(filterVal.substring(1)) < value;
         } else if (filterVal.startsWith('=')) {
             return filterVal.length > 1 && parseFloat(filterVal.substring(1)) === value;

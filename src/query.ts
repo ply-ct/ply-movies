@@ -28,4 +28,22 @@ export class Query {
             }
         }
     }
+
+    getFilter(name: string): string | undefined {
+        return this.filters.get(name);
+    }
+
+    intFilter(name: string): number | undefined {
+        const val = this.filters.get(name);
+        if (val) {
+            return parseInt(val);
+        }
+    }
+
+    floatFilter(name: string): number | undefined {
+        const val = this.filters.get(name);
+        if (val) {
+            return parseFloat(val);
+        }
+    }
 }

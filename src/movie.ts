@@ -14,7 +14,7 @@ export interface WebRef {
 export class Movie {
 
     id: string;
-    title?: string; // required
+    title: string; // required
     year?: number; // required, range: 1900 -
     credits?: Credit[];
     poster?: string;

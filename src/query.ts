@@ -1,11 +1,10 @@
 import * as express from 'express';
-import { Movie } from './movie';
 
-export class MovieQuery {
+export class Query {
 
     start = 0;
     max?: number;
-    sort = 'title';
+    sort?: string;
     descending = false;
     search?: string;
 
@@ -28,20 +27,5 @@ export class MovieQuery {
                 this.filters.set(param, value);
             }
         }
-    }
-
-    filter(movie: Movie, index: number): boolean {
-        return false;
-    }
-
-    compare(movie1: Movie, movie2: Movie): number {
-        let val1 = (movie1 as any)[this.sort];
-        let val2 = (movie2 as any)[this.sort];
-
-        return 0;
-    }
-
-    limit(movies: Movie[]): Movie[] {
-        return this.max ? movies.slice(this.start, this.start + this.max) : movies.slice(this.start);
     }
 }

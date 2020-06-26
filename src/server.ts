@@ -3,7 +3,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { StatusResponse } from './response';
 import { MoviesService } from './service';
-import { MovieQuery } from './query';
+import { Query } from './query';
 
 export namespace server {
     const app = express();
@@ -26,11 +26,12 @@ export namespace server {
                     response.status(404).send(new StatusResponse(404, `Movie not found: ${request.params.id}`));
                 }
             } else {
-                response.send(await MoviesService.getMovies(new MovieQuery(request)));
+                const movies = await MoviesService.getMovies(new Query(request));
+                response.send({ movies });
             }
         } catch (error) {
             console.error(error);
-            response.status(500).send(new StatusResponse(500, `Error: ${error.message}`));
+            response.status(500).send(new StatusResponse(500, `Server Error: ${error.message}`));
         }
     });
     app.get('*', notFound);

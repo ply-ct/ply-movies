@@ -5,4 +5,4 @@ node_modules/
 dist/
 *.code-workspace
 temp/
-./movies.json
+#./movies.json

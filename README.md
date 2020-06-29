@@ -42,7 +42,7 @@ Retrieve the first page of movies from a list sorted by year
  - [/movies?max=25&sort=year](http://localhost:3000/movies?max=25&sort=year)
 
 Retrieve the first page of movies featuring Boris Karloff, sorted by year
- - [/movies?max=25&sort=year&search=Boris Karloff](http://localhost:3000/movies?max=25&sort=year&search=Boris Karloff)
+ - [/movies?max=25&sort=year&search=Boris%20Karloff](http://localhost:3000/movies?max=25&sort=year&search=Boris Karloff)
 
 ## Sample POST
 Create a movie by posting to `/movies`:

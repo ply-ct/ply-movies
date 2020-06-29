@@ -1,7 +1,7 @@
 import { Movie } from './movie';
 
 export class ValidationError extends Error {
-    constructor(message: string) {
+    constructor(message: string, readonly code = 400) {
         super(message);
     }
 }

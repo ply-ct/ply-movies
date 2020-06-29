@@ -60,10 +60,33 @@ class MoviesServiceImpl {
         const id = this.hashCode(unique).toString(16);
         const exist = movies.find(m => m.id === id);
         if (exist) {
-            throw new ValidationError(`Movie already exists with id: ${id}`);
+            throw new ValidationError(`Movie already exists with id: ${id}`, 409);
         }
         movie.id = id;
         movies.push(movie);
+        this.save(movies);
+    }
+
+    /**
+     * Expects movie.id to be populated.
+     */
+    async updateMovie(movie: Movie): Promise<void> {
+        const movies = await this.load();
+        const idx = movies.findIndex(m => m.id === movie.id);
+        if (idx === -1) {
+            throw new ValidationError(`Movie not found with id: ${movie.id}`, 404);
+        }
+        movies[idx] = movie;
+        this.save(movies);
+    }
+
+    async deleteMovie(id: string): Promise<void> {
+        const movies = await this.load();
+        const idx = movies.findIndex(m => m.id === id);
+        if (idx === -1) {
+            throw new ValidationError(`Movie not found with id: ${id}`, 404);
+        }
+        movies.splice(idx, 1);
         this.save(movies);
     }
 

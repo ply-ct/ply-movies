@@ -2,8 +2,13 @@
 A simple, self-contained movies API for REST testing.  
 The included data contains horror movies from the 1930s.
 
-To start server:
-`npm start`
+Install:
+`npm install -g ply-movies`
+
+Start:
+`ply-movies start`
+Stop:
+`ply-movies stop`
 
 ## Configuration
 | Environment Variable | Usage |

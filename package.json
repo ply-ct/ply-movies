@@ -3,25 +3,37 @@
   "version": "1.0.1",
   "description": "Simple, self-contained movies API for REST testing",
   "main": "dist/main.js",
-  "files": [ "dist" ],
+  "bin": {
+    "ply-movies": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
   "types": "dist",
   "scripts": {
     "build": "tsc && cp data/movies.json dist || copy data\\movies.json dist",
-    "start": "node dist/main.js"
+    "start": "node dist/main.js",
+    "stop": "node -e 'require(\"dist/main.js\").stop()'"
   },
   "engines": {
     "node": ">=12"
   },
   "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/express": "^4.17.4",
+    "@types/node": "^13.7.4",
+    "@types/socket.io": "^2.1.8",
+    "@types/socket.io-client": "^1.4.33",
     "@typescript-eslint/eslint-plugin": "^2.20.0",
     "@typescript-eslint/parser": "^2.20.0",
     "eslint": "^6.8.0",
-    "typescript": "^3.8.3",
-    "@types/express": "^4.17.4",
-    "@types/node": "^13.7.4"
+    "typescript": "^3.8.3"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
-    "express": "^4.17.1"
+    "commander": "^5.1.0",
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0"
   }
 }

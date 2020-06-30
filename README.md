@@ -2,12 +2,16 @@
 A simple, self-contained movies API for REST testing.  
 The included data contains horror movies from the 1930s.
 
-Install:
+The ply-movies API is used by [Ply](https://github.com/ply-ct/ply#readme) 
+in its automated tests and tutorials.
+
+Install:  
 `npm install -g ply-movies`
 
-Start:
-`ply-movies start`
-Stop:
+Start:  
+`ply-movies start`  
+
+Stop:  
 `ply-movies stop`
 
 ## Configuration
@@ -18,37 +22,40 @@ Stop:
 | --file | MOVIES_FILE | movies.json | Location of writeable movies JSON file (created on first update) |
 
 ## Sample queries
+These URLs point against ply-ct.com.  However, the main point of ply-movies is to be hosted locally
+so that during development you can exercise all API methods, including POST, PUT, PATCH and DELETE.
+
 All movies:
- - [/movies](http://localhost:3000/movies)
+ - [/movies](https://ply-ct.com/movies)
 
 Movies made in 1931:
- - [/movies?year=1931](http://localhost:3000/movies?year=1931)
+ - [/movies?year=1931](https://ply-ct.com/movies?year=1931)
 
 Movies made after 1935:
- - [/movies?year=>1935](http://localhost:3000/movies?year=>1935)
-   (note > is part of query **value**)
+ - [/movies?year=>1935](https://ply-ct.com/movies?year=>1935)
+   (note: > is part of query **value**)
 
 Movies sorted by rating in descending order:
- - [/movies?sort=rating&descending=true](http://localhost:3000/movies?sort=rating&descending=true)
+ - [/movies?sort=rating&descending=true](https://ply-ct.com/movies?sort=rating&descending=true)
 
 Movies with a rating of 3.5 or above, sorted by year:
- - [/movies?rating=>=3.5&sort=year](http://localhost:3000/movies?rating=>=3.5&sort=year)
-   (note >= is prepended to query **value**)
+ - [/movies?rating=>=3.5&sort=year](https://ply-ct.com/movies?rating=>=3.5&sort=year)
+   (note: >= is prepended to query **value**)
 
 Find all movies with Bela Lugosi:
- - [/movies?search=Bela Lugosi](http://localhost:3000/movies?search=Bela Lugosi)
+ - [/movies?search=Bela%20Lugosi](https://ply-ct.com/movies?search=Bela%20Lugosi)
 
 Retrieve the first page of movies, with page size = 25
- - [/movies?max=25&start=0](http://localhost:3000/movies?max=25&start=0)
+ - [/movies?max=25&start=0](https://ply-ct.com/movies?max=25&start=0)
 
 Retrieve the second page of movies, with page size = 25
- - [/movies?max=25&start=25](http://localhost:3000/movies?max=25&start=25)
+ - [/movies?max=25&start=25](https://ply-ct.com/movies?max=25&start=25)
 
 Retrieve the first page of movies from a list sorted by year
- - [/movies?max=25&sort=year](http://localhost:3000/movies?max=25&sort=year)
+ - [/movies?max=25&sort=year](https://ply-ct.com/movies?max=25&sort=year)
 
 Retrieve the first page of movies featuring Boris Karloff, sorted by year
- - [/movies?max=25&sort=year&search=Boris%20Karloff](http://localhost:3000/movies?max=25&sort=year&search=Boris Karloff)
+ - [/movies?max=25&sort=year&search=Boris%20Karloff](https://ply-ct.com/movies?max=25&sort=year&search=Boris%20Karloff)
 
 ## Sample POST
 Create a movie by posting to `/movies`:

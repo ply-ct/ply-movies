@@ -1,6 +1,6 @@
 {
   "name": "ply-movies",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Simple, self-contained movies API for REST testing",
   "keywords": ["REST", "API", "movies"],
   "main": "dist/main.js",
@@ -11,6 +11,16 @@
     "dist"
   ],
   "types": "dist",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ply-ct/ply-movies.git"
+  },
+  "author": "Donald Oakes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ply-ct/ply-movies/issues"
+  },
+  "homepage": "https://github.com/ply-ct/ply-movies#readme",
   "scripts": {
     "build": "tsc && cp data/movies.json dist || copy data\\movies.json dist",
     "start": "node dist/main.js",

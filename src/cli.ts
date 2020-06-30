@@ -8,13 +8,15 @@ let server = new Server();
 
 const startCmd = new program.Command()
     .name('start')
-    .option('-p, --port <port>', 'listen on this port')
-    .option('-i, --indent <indent>', 'format JSON response with this number of spaces')
+    .option('-p, --port <port>', 'listen on this port (3000)')
+    .option('-i, --indent <indent>', 'format JSON response with this number of spaces (0)')
+    .option('-f, --file <file>', 'where to store writeable movies JSON file (movies.json)')
     .action(options => {
         server.start(options);
     });
 const stopCmd = new program.Command()
     .name('stop')
+    .option('-p, --port <port>', 'request shutdown on this port')
     .action(() => {
         server.stop();
     });

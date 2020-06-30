@@ -11,10 +11,11 @@ Stop:
 `ply-movies stop`
 
 ## Configuration
-| Environment Variable | Usage |
-| -------------------- | ----- |
-| SERVER_PORT | API server should listen on this port |
-| RESPONSE_INDENT | Format JSON response with this number of spaces |
+| CLI Option | Environment Variable | Default | Usage |
+| ---------- | -------------------- | ------- | ------|
+| --port | SERVER_PORT | 3000 | API server should listen on this port |
+| --indent | RESPONSE_INDENT | 0 | Format JSON response with this number of spaces |
+| --file | MOVIES_FILE | movies.json | Location of writeable movies JSON file (created on first update) |
 
 ## Sample queries
 All movies:
@@ -53,6 +54,8 @@ Retrieve the first page of movies featuring Boris Karloff, sorted by year
 Create a movie by posting to `/movies`:
 ```json
 {
+  "title": "The Case of the Howling Dog",
+  "year": 1934,
   "credits": [
     {
       "name": "Alan Crosland",
@@ -79,12 +82,9 @@ Create a movie by posting to `/movies`:
       "role": "actor"
     }
   ],
-  "poster": "cothd.jpg",
-  "title": "The Case of the Howling Dog",
   "webRef": {
     "ref": "tt0024958",
     "site": "imdb.com"
-  },
-  "year": 1934
+  }
 }
 ```

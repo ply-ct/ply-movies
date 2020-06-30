@@ -16,6 +16,8 @@ export class Server {
     start(options?: any) {
         this.port = options?.port || this.port;
         this.jsonIndent = options?.indent || this.jsonIndent;
+        this.moviesFile = options?.file || this.moviesFile;
+        MoviesService.moviesFile = this.moviesFile;
 
         const app = express();
 
@@ -151,6 +153,14 @@ export class Server {
             response.status(405).send(new StatusResponse(405, `Unsupported method: ${request.method}`));
         });
 
+        app.use(function (error: Error, _request: express.Request, response: express.Response, _next: express.NextFunction) {
+            if (error instanceof SyntaxError) {
+                response.status(400).send(new StatusResponse(400, `${error}`));
+            } else {
+                response.status(500).send(new StatusResponse(500, `${error}`));
+            }
+        });
+
         let server = app.listen(this.port, () => console.log(`Movies API server listening at http://localhost:${this.port}`));
 
         io(server).on('connection', socket => {
@@ -162,8 +172,10 @@ export class Server {
     }
 
     stop(port = parseInt(process.env.SERVER_PORT || '3000')) {
-        const socketClient = ioClient.connect('http://localhost:' + port);
+        let url = `http://localhost${port === 80 ? '' : ':' + port}`;
+        const socketClient = ioClient.connect(url);
         socketClient.on('connect', () => {
+            console.log(`Requesting shutdown at ${url}`);
             socketClient.emit('stopServer');
             setTimeout(() => { process.exit(0); }, 1000);
         });

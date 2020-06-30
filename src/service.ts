@@ -6,6 +6,7 @@ import { ValidationError } from './validate';
 
 class MoviesServiceImpl {
 
+    private _moviesFile = 'movies.json';
     private _movies?: Movie[];
 
     async getMovie(id: string): Promise<Movie | undefined> {
@@ -98,8 +99,11 @@ class MoviesServiceImpl {
     /**
      * This is the writeable movies file.
      */
-    private get moviesFile() {
-        return 'movies.json'; // TODO env
+    get moviesFile(): string {
+        return this._moviesFile;
+    }
+    set moviesFile(file: string) {
+        this._moviesFile = file;
     }
 
     /**

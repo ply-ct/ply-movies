@@ -25,7 +25,7 @@ export class Server {
         app.set('json spaces', this.jsonIndent);
 
         const notFound = async (request: express.Request, response: express.Response) => {
-            response.send(new StatusResponse(404, `Invalid path for ${request.method}: ${request.path}`));
+            response.status(404).send(new StatusResponse(404, `Invalid path for ${request.method}: ${request.path}`));
         };
 
         app.get('/movies/:id?', async (request, response) => {

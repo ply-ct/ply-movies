@@ -54,9 +54,6 @@ export class Server {
                 await MoviesService.createMovie(movie);
                 console.log(`Movie created with id: ${movie.id}`);
                 let base = request.protocol + '://' + request.get('host');
-                if (this.port !== 80 && this.port !== 443) {
-                    base += ':' + this.port;
-                }
                 response.set('Location', `${base}/movies/${movie.id}`);
                 response.status(201).send(movie);
             } catch (error) {

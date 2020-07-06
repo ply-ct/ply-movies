@@ -4,7 +4,7 @@ export interface Status {
 }
 
 export class StatusResponse {
-    static OK: Status = { code: 200, message: 'Ok' };
+    static OK: Status = { code: 200, message: 'OK' };
 
     status: Status;
 

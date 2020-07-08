@@ -8,9 +8,10 @@ let server = new Server();
 
 const startCmd = new program.Command()
     .name('start')
-    .option('-p, --port <port>', 'listen on this port (3000)')
-    .option('-i, --indent <indent>', 'format JSON response with this number of spaces (0)')
+    .option('-p, --port <port>', 'listen on this port (3000)', parseInt)
+    .option('-i, --indent <indent>', 'format JSON response with this number of spaces (0)', parseInt)
     .option('-f, --file <file>', 'where to store writeable movies JSON file (movies.json)')
+    .option('-r, --readonly', 'flag to disallow POST, PUT, PATCH and DELETE requests')
     .action(options => {
         server.start(options);
     });

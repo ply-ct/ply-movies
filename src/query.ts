@@ -12,7 +12,7 @@ export class Query {
 
     constructor(request: express.Request) {
         for (const param in request.query) {
-            let value = request.query[param] + '';
+            const value = request.query[param] + '';
             if (param === 'start') {
                 this.start = parseInt(value);
             } else if (param === 'max') {

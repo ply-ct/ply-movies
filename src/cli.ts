@@ -3,8 +3,9 @@
 import * as process from 'process';
 import * as program from 'commander';
 import { Server } from './server';
+import { version } from './version';
 
-let server = new Server();
+const server = new Server();
 
 const startCmd = new program.Command()
     .name('start')
@@ -17,12 +18,18 @@ const startCmd = new program.Command()
     });
 const stopCmd = new program.Command()
     .name('stop')
-    .option('-p, --port <port>', 'request shutdown on this port')
+    .option('-p, --port <port>', 'request shutdown via this port')
     .action(() => {
         server.stop();
+    });
+const verCmd = new program.Command()
+    .name('version')
+    .action(() => {
+        console.log(`ply-movies ${version}`);
     });
 
 program
   .addCommand(startCmd)
   .addCommand(stopCmd)
+  .addCommand(verCmd)
   .parse(process.argv);

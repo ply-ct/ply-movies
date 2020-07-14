@@ -107,8 +107,8 @@ export class MovieMatcher {
 
     compare(other: Movie, sort: string, descending: boolean): number {
         const direction = descending ? -1 : 1;
-        let val1 = (this.movie as any)[sort];
-        let val2 = (other as any)[sort];
+        const val1 = (this.movie as any)[sort];
+        const val2 = (other as any)[sort];
         let res = 0;
         if (typeof val1 === 'undefined') {
             res = direction * (typeof val2 === 'undefined' ? 0 : -1);

@@ -49,10 +49,10 @@ export class MovieValidator {
                 throw new ValidationError(`Invalid type for 'credits': ${typeof credits}`);
             }
             for (const i in credits) {
-                let credit = credits[i];
-                let name = this.getRequired('name', credit, `credits[${i}].name`);
+                const credit = credits[i];
+                const name = this.getRequired('name', credit, `credits[${i}].name`);
                 this.enforceType(`credits[${i}].name`, name, 'string');
-                let role = this.getRequired('role', credit, `credits[${i}].role`);
+                const role = this.getRequired('role', credit, `credits[${i}].role`);
                 this.enforceType(`credits[${i}].role`, role, 'string');
             }
         }
@@ -60,9 +60,9 @@ export class MovieValidator {
         const webRef = this.getOptional('webRef');
         if (typeof webRef !== 'undefined') {
             this.enforceType('webRef', webRef, 'object');
-            let site = this.getRequired('site', webRef, 'webRef.site');
+            const site = this.getRequired('site', webRef, 'webRef.site');
             this.enforceType('webRef.site', site, 'string');
-            let ref = this.getRequired('ref', webRef, 'webRef.ref');
+            const ref = this.getRequired('ref', webRef, 'webRef.ref');
             this.enforceType('webRef.ref', ref, 'string');
         }
 

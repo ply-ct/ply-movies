@@ -59,10 +59,10 @@ export class Server {
                 notAllowed(request, response);
             } else {
                 try {
-                    let movie = new MovieValidator(request.body).validate();
+                    const movie = new MovieValidator(request.body).validate();
                     await MoviesService.createMovie(movie);
                     console.log(`Movie created with id: ${movie.id}`);
-                    let base = request.protocol + '://' + request.get('host');
+                    const base = request.protocol + '://' + request.get('host');
                     response.set('Location', `${base}/movies/${movie.id}`);
                     response.status(201).send(movie);
                 } catch (error) {
@@ -82,9 +82,9 @@ export class Server {
                 notAllowed(request, response);
             } else {
                 try {
-                    let existing = await MoviesService.getMovie(request.params.id);
+                    const existing = await MoviesService.getMovie(request.params.id);
                     if (existing) {
-                        let movie = new MovieValidator(request.body).validate();
+                        const movie = new MovieValidator(request.body).validate();
                         if (movie.id) {
                             if (movie.id !== existing.id) {
                                 throw new ValidationError(`Cannot modify id: ${existing.id}`);
@@ -116,7 +116,7 @@ export class Server {
                 notAllowed(request, response);
             } else {
                 try {
-                    let existing = await MoviesService.getMovie(request.params.id);
+                    const existing = await MoviesService.getMovie(request.params.id);
                     if (existing) {
                         let movie = { ...existing, ...request.body };
                         movie = new MovieValidator(movie).validate();
@@ -151,7 +151,7 @@ export class Server {
                 notAllowed(request, response);
             } else {
                 try {
-                    let existing = await MoviesService.getMovie(request.params.id);
+                    const existing = await MoviesService.getMovie(request.params.id);
                     if (existing) {
                         await MoviesService.deleteMovie(request.params.id);
                         response.send(new StatusResponse());
@@ -180,7 +180,7 @@ export class Server {
             }
         });
 
-        let server = app.listen(this.port, () => console.log(`Movies API server listening at http://localhost:${this.port}`));
+        const server = app.listen(this.port, () => console.log(`Movies API server listening at http://localhost:${this.port}`));
 
         io(server).on('connection', socket => {
             socket.on('stopServer', () => {
@@ -191,7 +191,7 @@ export class Server {
     }
 
     stop(port = parseInt(process.env.SERVER_PORT || '3000')) {
-        let url = `http://localhost${port === 80 ? '' : ':' + port}`;
+        const url = `http://localhost${port === 80 ? '' : ':' + port}`;
         const socketClient = ioClient.connect(url);
         socketClient.on('connect', () => {
             console.log(`Requesting shutdown at ${url}`);

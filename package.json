@@ -1,8 +1,12 @@
 {
   "name": "ply-movies",
-  "version": "1.0.5",
+  "version": "1.0.8",
   "description": "Simple, self-contained movies API for REST testing",
-  "keywords": ["REST", "API", "movies"],
+  "keywords": [
+    "REST",
+    "API",
+    "movies"
+  ],
   "main": "dist/main.js",
   "bin": {
     "ply-movies": "dist/cli.js"
@@ -22,7 +26,7 @@
   },
   "homepage": "https://github.com/ply-ct/ply-movies#readme",
   "scripts": {
-    "build": "tsc && cp data/movies.json dist || copy data\\movies.json dist",
+    "build": "genversion --es6 --semi src/version.js && tsc && cp data/movies.json dist || copy data\\movies.json dist",
     "start": "node dist/main.js",
     "stop": "node -e 'require(\"dist/main.js\").stop()'"
   },
@@ -35,10 +39,11 @@
     "@types/node": "^13.7.4",
     "@types/socket.io": "^2.1.8",
     "@types/socket.io-client": "^1.4.33",
-    "@typescript-eslint/eslint-plugin": "^2.20.0",
-    "@typescript-eslint/parser": "^2.20.0",
-    "eslint": "^6.8.0",
-    "typescript": "^3.8.3"
+    "@typescript-eslint/eslint-plugin": "^3.6.1",
+    "@typescript-eslint/parser": "^3.6.1",
+    "eslint": "^7.4.0",
+    "genversion": "^2.2.1",
+    "typescript": "^3.9.6"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

@@ -1,5 +1,5 @@
 # ply-movies
-A simple, self-contained movies API for REST testing.  
+A simple, self-contained movies API for REST service testing.  
 The included data contains horror movies from the 1930s.
 
 The ply-movies API is used by [Ply](https://github.com/ply-ct/ply#readme) 

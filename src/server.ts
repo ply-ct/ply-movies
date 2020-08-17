@@ -190,13 +190,21 @@ export class Server {
         });
     }
 
+    /**
+     * TODO: configurable timeout vs ioClient default of 20s
+     */
     stop(port = parseInt(process.env.SERVER_PORT || '3000')) {
         const url = `http://localhost${port === 80 ? '' : ':' + port}`;
+        console.log(`Requesting shutdown at ${url}`);
         const socketClient = ioClient.connect(url);
         socketClient.on('connect', () => {
-            console.log(`Requesting shutdown at ${url}`);
             socketClient.emit('stopServer');
             setTimeout(() => { process.exit(0); }, 1000);
         });
+        // if we made it here, connection was not achieved
+        setTimeout(() => {
+            console.error('No connection after 20s; exiting');
+            process.exit(1);
+        }, 21000);
     }
 }

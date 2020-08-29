@@ -19,9 +19,9 @@ const startCmd = new program.Command()
     });
 const stopCmd = new program.Command()
     .name('stop')
-    .option('-p, --port <port>', 'request shutdown via this port')
-    .action(() => {
-        server.stop();
+    .option('-p, --port <port>', 'request shutdown via this port (3000)', parseInt)
+    .action(options => {
+        server.stop(options.port);
     });
 const verCmd = new program.Command()
     .name('version')

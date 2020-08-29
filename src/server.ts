@@ -13,12 +13,15 @@ export class Server {
     jsonIndent: number = parseInt(process.env.RESPONSE_INDENT || '0');
     moviesFile: string = process.env.MOVIES_FILE || 'movies.json';
     readonly: boolean = 'true' === process.env.READONLY_API;
+    quiet: boolean = false;
 
     start(options?: any) {
         this.port = options?.port || this.port;
         this.jsonIndent = options?.indent || this.jsonIndent;
         this.moviesFile = options?.file || this.moviesFile;
         this.readonly = options?.readonly || this.readonly;
+        this.quiet = options?.quiet || false;
+
         MoviesService.moviesFile = this.moviesFile;
 
         const app = express();
@@ -180,7 +183,11 @@ export class Server {
             }
         });
 
-        const server = app.listen(this.port, () => console.log(`Movies API server listening at http://localhost:${this.port}`));
+        const server = app.listen(this.port, () => {
+            if (!this.quiet) {
+                console.log(`Movies API server listening at http://localhost:${this.port}`);
+            }
+        });
 
         io(server).on('connection', socket => {
             socket.on('stopServer', () => {

@@ -13,6 +13,7 @@ const startCmd = new program.Command()
     .option('-i, --indent <indent>', 'format JSON response with this number of spaces (0)', parseInt)
     .option('-f, --file <file>', 'where to store writeable movies JSON file (movies.json)')
     .option('-r, --readonly', 'flag to disallow POST, PUT, PATCH and DELETE requests')
+    .option('-q, --quiet', 'quiet startup')
     .action(options => {
         server.start(options);
     });

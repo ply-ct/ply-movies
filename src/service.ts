@@ -25,8 +25,8 @@ class MoviesServiceImpl {
                 movies = movies.sort((m1, m2) => new MovieMatcher(m1).compare(m2, sort, query.descending));
             }
             // limit
-            if (query.max) {
-                const end = Math.min(query.start + query.max - 1, movies.length - 1);
+            if (typeof query.max === 'number') {
+                const end = Math.min(query.start + query.max, movies.length + 1);
                 movies = movies.splice(query.start, end);
             } else if (query.start) {
                 movies = movies.splice(query.start);

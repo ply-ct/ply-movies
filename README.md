@@ -96,3 +96,5 @@ Create a movie by posting to `/movies`:
   }
 }
 ```
+## More examples
+See Ply tests in the [ply-demo](https://github.com/ply-ct/ply-demo) repository.

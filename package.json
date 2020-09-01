@@ -1,6 +1,6 @@
 {
   "name": "ply-movies",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Simple, self-contained movies API for REST testing",
   "keywords": [
     "REST",

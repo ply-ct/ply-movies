@@ -26,7 +26,9 @@ export class Server {
 
         const app = express();
 
-        app.use(bodyParser.json());
+        app.use(express.static('public'));
+
+        app.use(express.json());
         app.set('json spaces', this.jsonIndent);
 
         const notFound = async (request: express.Request, response: express.Response) => {

@@ -10,7 +10,7 @@ export interface Credit {
      */
     name: string;
     /**
-     * Their role in the production (directory, actor).
+     * Their role in the production (actor, director).
      * required
      */
     role: string;
@@ -34,7 +34,7 @@ export interface WebRef {
 
 export interface Movie {
     /**
-     * Unique id provided by the service.
+     * Unique id provided by the API.
      * readonly
      */
     id: string;
@@ -45,7 +45,7 @@ export interface Movie {
     title: string;
     /**
      * Year of release.
-     * required, range: 1900-
+     * required, range: 1930-1939
      */
     year: number;
     /**

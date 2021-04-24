@@ -57,6 +57,16 @@ export class Server {
                 response.status(500).send(new StatusResponse(500, `Server Error: ${error.message}`));
             }
         });
+        app.get('/randomId', async (_request, response) => {
+            try {
+                response.set('content-type', 'text/plain');
+                const id = await MoviesService.randomId();
+                response.send(id);
+            } catch (error) {
+                console.error(error);
+                response.status(500).send(new StatusResponse(500, `Server Error: ${error.message}`));
+            }
+        });
         app.get('*', notFound);
 
         app.post('/movies', async (request, response) => {

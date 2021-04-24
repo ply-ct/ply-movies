@@ -37,6 +37,13 @@ class MoviesServiceImpl {
         }
     }
 
+    async randomId(): Promise<string> {
+        // only movies with descriptions and 6 credits
+        const movies = (await this.getMovies()).filter(m => m.description && m.credits?.length === 6);
+        const i = Math.floor(Math.random() * movies.length - 1);
+        return movies[i].id;
+    }
+
     async load(): Promise<Movie[]> {
         let moviesObj;
         if (fs.existsSync(this.moviesFile)) {

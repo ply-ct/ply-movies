@@ -40,13 +40,14 @@ export class Server {
         };
 
         app.get('/movies/:id?', async (request, response) => {
+            const reqParams = request.params as any;
             try {
-                if (request.params.id) {
-                    const movie = await MoviesService.getMovie(request.params.id);
+                if (reqParams.id) {
+                    const movie = await MoviesService.getMovie(reqParams.id);
                     if (movie) {
                         response.send(movie);
                     } else {
-                        response.status(404).send(new StatusResponse(404, `Movie not found: ${request.params.id}`));
+                        response.status(404).send(new StatusResponse(404, `Movie not found: ${reqParams.id}`));
                     }
                 } else {
                     const movies = await MoviesService.getMovies(new Query(request));

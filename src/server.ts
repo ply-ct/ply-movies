@@ -1,6 +1,5 @@
 import * as process from 'process';
 import * as express from 'express';
-import * as bodyParser from 'body-parser';
 import * as io from 'socket.io';
 import * as ioClient from 'socket.io-client';
 import { StatusResponse } from './response';
@@ -73,7 +72,7 @@ export class Server {
                     response.status(201).send(movie);
                 } catch (error) {
                     if (error instanceof ValidationError) {
-                        response.status(400).send(new StatusResponse(400, error.message));
+                        response.status(error.code || 400).send(new StatusResponse(error.code || 400, error.message));
                     } else {
                         console.error(error);
                         response.status(500).send(new StatusResponse(500, `Server Error: ${error.message}`));

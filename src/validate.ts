@@ -15,8 +15,8 @@ export class MovieValidator {
 
         const year = this.getRequired('year');
         this.enforceType('year', year, 'number');
-        if (year < 1930 || year > 1939) {
-            throw new ValidationError(`Value for 'year' (${year}) should be between 1930 and 1939`);
+        if (year < 1930 || year > 1945) {
+            throw new ValidationError(`Value for 'year' (${year}) should be between 1930 and 1945`);
         }
 
         const poster = this.getOptional('poster');

@@ -13,6 +13,7 @@ export class Server {
     moviesFile: string = process.env.MOVIES_FILE || 'movies.json';
     readonly: boolean = 'true' === process.env.READONLY_API;
     quiet: boolean = false;
+    delay: number = 0; // ms
 
     start(options?: any) {
         this.port = options?.port || this.port;
@@ -20,6 +21,7 @@ export class Server {
         this.moviesFile = options?.file || this.moviesFile;
         this.readonly = options?.readonly || this.readonly;
         this.quiet = options?.quiet || false;
+        this.delay = options?.delay ? parseInt(options.delay) : 0;
 
         MoviesService.moviesFile = this.moviesFile;
 
@@ -38,7 +40,11 @@ export class Server {
             response.status(405).send(new StatusResponse(405, `Updates not allowed`));
         };
 
+
         app.get('/movies/:id?', async (request, response) => {
+            if (this.delay) {
+                await this.sleep(this.delay);
+            }
             const reqParams = request.params as any;
             try {
                 if (reqParams.id) {
@@ -60,6 +66,9 @@ export class Server {
         app.get('*', notFound);
 
         app.post('/movies', async (request, response) => {
+            if (this.delay) {
+                await this.sleep(this.delay);
+            }
             if (this.readonly) {
                 notAllowed(request, response);
             } else {
@@ -83,6 +92,9 @@ export class Server {
         app.post('*', notFound);
 
         app.put('/movies/:id', async (request, response) => {
+            if (this.delay) {
+                await this.sleep(this.delay);
+            }
             if (this.readonly) {
                 notAllowed(request, response);
             } else {
@@ -117,6 +129,9 @@ export class Server {
         app.put('*', notFound);
 
         app.patch('/movies/:id', async (request, response) => {
+            if (this.delay) {
+                await this.sleep(this.delay);
+            }
             if (this.readonly) {
                 notAllowed(request, response);
             } else {
@@ -152,6 +167,9 @@ export class Server {
         app.patch('*', notFound);
 
         app.delete('/movies/:id', async (request, response) => {
+            if (this.delay) {
+                await this.sleep(this.delay);
+            }
             if (this.readonly) {
                 notAllowed(request, response);
             } else {
@@ -215,5 +233,9 @@ export class Server {
             console.error('No connection after 20s; exiting');
             process.exit(1);
         }, 21000);
+    }
+
+    private async sleep(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 }

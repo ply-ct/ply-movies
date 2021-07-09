@@ -14,6 +14,7 @@ const startCmd = new program.Command()
     .option('-f, --file <file>', 'where to store writeable movies JSON file (movies.json)')
     .option('-r, --readonly', 'flag to disallow POST, PUT, PATCH and DELETE requests')
     .option('-q, --quiet', 'quiet startup')
+    .option('-d, --delay <ms>', 'delay responses')
     .action(options => {
         server.start(options);
     });

@@ -21,6 +21,7 @@ Stop:
 | --indent | RESPONSE_INDENT | 0 | Format JSON response with this number of spaces |
 | --file | MOVIES_FILE | movies.json | Location of writeable movies JSON file (created on first update) |
 | --readonly | READONLY_API | false | Disallow POST, PUT, PATCH and DELETE requests |
+| --delay | | 0 | Impose a delay in milliseconds on response |
 
 ## Sample queries
 These URLs point against ply-ct.com.  However, the main point of ply-movies is to be hosted locally

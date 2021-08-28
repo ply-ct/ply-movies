@@ -10,15 +10,15 @@ info:
     altText: Ply
 externalDocs:
   description: Find out more about Ply
-  url: https://ply-ct.com
+  url: https://ply-ct.org
 servers:
-  - url: https://ply-ct.com
+  - url: https://ply-ct.org
 tags:
   - name: Ply Movies
     description: Horror movies from the 1930s
     externalDocs:
       description: Ply Example API
-      url: https://ply-ct.com
+      url: https://ply-ct.org
 paths:
   /movies:
     get:

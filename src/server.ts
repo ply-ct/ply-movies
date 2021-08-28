@@ -60,7 +60,7 @@ export class Server {
                 }
             } catch (error) {
                 console.error(error);
-                response.status(500).send(new StatusResponse(500, `Server Error: ${error.message}`));
+                response.status(500).send(new StatusResponse(500));
             }
         });
         app.get('*', notFound);
@@ -84,7 +84,7 @@ export class Server {
                         response.status(error.code || 400).send(new StatusResponse(error.code || 400, error.message));
                     } else {
                         console.error(error);
-                        response.status(500).send(new StatusResponse(500, `Server Error: ${error.message}`));
+                        response.status(500).send(new StatusResponse(500));
                     }
                 }
             }
@@ -121,7 +121,7 @@ export class Server {
                         response.status(400).send(new StatusResponse(400, error.message));
                     } else {
                         console.error(error);
-                        response.status(500).send(new StatusResponse(500, `Server Error: ${error.message}`));
+                        response.status(500).send(new StatusResponse(500));
                     }
                 }
             }
@@ -159,7 +159,7 @@ export class Server {
                         response.status(400).send(new StatusResponse(400, error.message));
                     } else {
                         console.error(error);
-                        response.status(500).send(new StatusResponse(500, `Server Error: ${error.message}`));
+                        response.status(500).send(new StatusResponse(500));
                     }
                 }
             }
@@ -184,7 +184,7 @@ export class Server {
                     }
                 } catch (error) {
                     console.error(error);
-                    response.status(500).send(new StatusResponse(500, `Server Error: ${error.message}`));
+                    response.status(500).send(new StatusResponse(500));
                 }
             }
         });
@@ -199,7 +199,7 @@ export class Server {
             if (error instanceof SyntaxError) {
                 response.status(400).send(new StatusResponse(400, `${error}`));
             } else {
-                response.status(500).send(new StatusResponse(500, `${error}`));
+                response.status(500).send(new StatusResponse(500));
             }
         });
 

@@ -1,3 +1,7 @@
+<a href="https://ply-ct.org">
+  <img src="https://ply-ct.org/ply/badge/passing.svg" />
+</a>
+
 # ply-movies
 A simple, self-contained movies API for REST service testing.  
 The included data contains horror movies from the 1930s.

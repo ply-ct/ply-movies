@@ -10,7 +10,7 @@ The ply-movies API is used by [Ply](https://github.com/ply-ct/ply#readme)
 in its automated tests and tutorials.
 
 Install:  
-`npm install -g ply-movies`
+`npm install -g @ply-ct/ply-movies`
 
 Start:  
 `ply-movies start`  

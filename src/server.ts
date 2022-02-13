@@ -1,7 +1,7 @@
 import * as process from 'process';
 import * as express from 'express';
-import * as io from 'socket.io';
-import * as ioClient from 'socket.io-client';
+import { Server as IoServer} from 'socket.io';
+import { io } from "socket.io-client";
 import { StatusResponse } from './response';
 import { MoviesService } from './service';
 import { Query } from './query';
@@ -209,7 +209,9 @@ export class Server {
             }
         });
 
-        io(server).on('connection', socket => {
+        const io = new IoServer(server);
+
+        io.on('connection', socket => {
             socket.on('stopServer', () => {
                 console.log('   ... shutting down');
                 process.exit(0);
@@ -223,7 +225,8 @@ export class Server {
     stop(port = parseInt(process.env.SERVER_PORT || '3000')) {
         const url = `http://localhost${port === 80 ? '' : ':' + port}`;
         console.log(`Requesting shutdown at ${url}`);
-        const socketClient = ioClient.connect(url);
+        const socketClient = io(url);
+        socketClient.connect();
         socketClient.on('connect', () => {
             socketClient.emit('stopServer');
             setTimeout(() => { process.exit(0); }, 1000);

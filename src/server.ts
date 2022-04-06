@@ -2,6 +2,7 @@ import * as process from 'process';
 import * as express from 'express';
 import { Server as IoServer} from 'socket.io';
 import { io } from "socket.io-client";
+import * as jsYaml from 'js-yaml';
 import { StatusResponse } from './response';
 import { MoviesService } from './service';
 import { Query } from './query';
@@ -47,16 +48,27 @@ export class Server {
             }
             const reqParams = request.params as any;
             try {
+                const format = request.headers.accept === 'text/yaml' ? 'yaml' : 'json';
                 if (reqParams.id) {
                     const movie = await MoviesService.getMovie(reqParams.id);
                     if (movie) {
-                        response.send(movie);
+                        if (format === 'yaml') {
+                            response.setHeader('Content-Type', 'text/yaml');
+                            response.send(jsYaml.dump(movie, { indent: 2 }));
+                        } else {
+                            response.send(movie);
+                        }
                     } else {
                         response.status(404).send(new StatusResponse(404, `Movie not found: ${reqParams.id}`));
                     }
                 } else {
                     const movies = await MoviesService.getMovies(new Query(request));
-                    response.send({ movies });
+                    if (format === 'yaml') {
+                        response.setHeader('Content-Type', 'text/yaml');
+                        response.send(jsYaml.dump(movies, { indent: 2 }));
+                    } else {
+                        response.send({ movies });
+                    }
                 }
             } catch (error) {
                 console.error(error);

@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/ply-ct/ply-movies#readme",
   "scripts": {
-    "build": "genversion --es6 --semi src/version.js && tsc && cp data/movies.json dist || copy data\\movies.json dist",
+    "build": "genversion --es6 --semi src/version.js && tsc && chmod +x dist/cli.js && cp data/movies.json dist || copy data\\movies.json dist",
     "start": "node dist/main.js",
     "stop": "node -e 'require(\"dist/main.js\").stop()'"
   },

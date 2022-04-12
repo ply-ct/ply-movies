@@ -61,7 +61,7 @@ class MoviesServiceImpl {
         const id = this.hashCode(unique).toString(16);
         const exist = movies.find(m => m.id === id);
         if (exist) {
-            throw new ValidationError(`Movie already exists with id: ${id}`, 409);
+            throw new ValidationError(`Movie already exists: ${movie.title} (${movie.year})`, 409);
         }
         movie.id = id;
         movies.push(movie);

@@ -3,16 +3,17 @@ info:
   title: Ply Movies API
   license:
     name: MIT License
-    url: https://github.com/ply-ct/ply-movies/blob/master/LICENSE
+    url: https://github.com/ply-ct/ply-movies/blob/main/LICENSE
   version: 1.1.1
   x-logo:
-    url: /assets/img/ply.png
+    url: https://ply-ct.org/ply/img/ply.svg
     altText: Ply
 externalDocs:
   description: Find out more about Ply
   url: https://ply-ct.org
 servers:
   - url: https://ply-ct.org
+    description: ply-ct.org
 tags:
   - name: Ply Movies
     description: Horror movies from the 1930s
@@ -119,6 +120,8 @@ paths:
         - name: movieId
           in: path
           required: true
+          schema:
+            type: string
       responses:
         '200':
           description: OK
@@ -140,6 +143,8 @@ paths:
         - name: movieId
           in: path
           required: true
+          schema:
+            type: string
       requestBody:
         description: Movie
         required: true
@@ -174,9 +179,15 @@ paths:
         - name: movieId
           in: path
           required: true
+          schema:
+            type: string
       requestBody:
         description: Partial movie
         required: true
+        content:
+          application/json:
+            schema:
+              type: object
       responses:
         '200':
           description: OK
@@ -204,6 +215,8 @@ paths:
         - name: movieId
           in: path
           required: true
+          schema:
+            type: string
       responses:
         '200':
           description: OK
@@ -228,7 +241,8 @@ components:
           type: string
         role:
           description: Their role in the production
-          type: enum
+          type: string
+          enum:
             - actor
             - director
       required:

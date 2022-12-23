@@ -1,6 +1,6 @@
 {
   "name": "@ply-ct/ply-movies",
-  "version": "1.1.11",
+  "version": "1.2.0",
   "description": "Simple, self-contained movies API for REST testing",
   "keywords": [
     "REST",
@@ -36,23 +36,21 @@
     "node": ">=12"
   },
   "devDependencies": {
-    "@types/express": "^4.17.4",
-    "@types/node": "^13.13.15",
-    "@types/socket.io": "^3.0.2",
-    "@types/socket.io-client": "^3.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.3.0",
-    "@typescript-eslint/parser": "^4.3.0",
-    "eslint": "^7.27.0",
-    "genversion": "^2.2.1",
+    "@types/express": "^4.17.15",
+    "@types/node": "^12.12.6",
+    "@typescript-eslint/eslint-plugin": "^5.47.0",
+    "@typescript-eslint/parser": "^5.47.0",
+    "eslint": "^8.30.0",
+    "genversion": "^3.1.1",
     "js-yaml": "^4.1.0",
-    "typescript": "^4.3.5"
+    "typescript": "^4.9.4"
   },
   "dependencies": {
     "@types/js-yaml": "^4.0.5",
-    "body-parser": "^1.19.0",
-    "commander": "^5.1.0",
-    "express": "^4.17.1",
-    "socket.io": "^3.1.2",
-    "socket.io-client": "^3.1.2"
+    "body-parser": "^1.20.1",
+    "commander": "^9.4.1",
+    "express": "^4.18.2",
+    "socket.io": "^4.5.4",
+    "socket.io-client": "^4.5.4"
   }
 }

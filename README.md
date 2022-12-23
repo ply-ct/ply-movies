@@ -27,6 +27,8 @@ Stop:
 | --readonly | READONLY_API | false | Disallow POST, PUT, PATCH and DELETE requests |
 | --delay | | 0 | Impose a delay in milliseconds on response |
 
+For example: `ply-movies start -p 3001`
+
 ## Sample queries
 These URLs point against ply-ct.org.  However, the main point of ply-movies is to be hosted locally
 so that during development you can exercise all API methods, including POST, PUT, PATCH and DELETE.

@@ -11,8 +11,7 @@
     "sourceMap": true,
     "strict": true,
     "allowJs": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "skipLibCheck": true
   },
   "exclude": [
     "dist",

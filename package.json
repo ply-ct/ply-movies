@@ -30,7 +30,10 @@
   "scripts": {
     "build": "genversion --es6 --semi src/version.js && tsc && chmod +x dist/cli.js && cp data/movies.json dist || copy data\\movies.json dist",
     "start": "node dist/main.js",
-    "stop": "node -e 'require(\"dist/main.js\").stop()'"
+    "stop": "node -e 'require(\"dist/main.js\").stop()'",
+    "docker-build": "docker build -t ply-ct/ply-movies .",
+    "docker-start": "docker run --rm -d -p 3000:3000 --name ply-movies ply-ct/ply-movies",
+    "docker-stop": "docker stop ply-movies"
   },
   "engines": {
     "node": ">=12"

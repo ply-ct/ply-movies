@@ -9,7 +9,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/dist/cli.js",
-            "args": ["start"],
+            "args": ["start", "--websockets"],
             "preLaunchTask": "tsc: build - tsconfig.json",
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"

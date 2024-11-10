@@ -1,12 +1,14 @@
 import * as process from 'process';
+import * as http from 'http';
 import * as express from 'express';
 import { Server as IoServer} from 'socket.io';
 import { io } from "socket.io-client";
 import * as jsYaml from 'js-yaml';
 import { StatusResponse } from './response';
-import { MoviesService } from './service';
+import { MoviesServiceImpl } from './service';
 import { Query } from './query';
 import { MovieValidator, ValidationError } from './validate';
+import { WsServer } from './websocket';
 
 export class Server {
     port: number = parseInt(process.env.SERVER_PORT || '3000');
@@ -15,6 +17,8 @@ export class Server {
     readonly: boolean = 'true' === process.env.READONLY_API;
     quiet: boolean = false;
     delay: number = 0; // ms
+    websockets: boolean = false;
+    moviesService = new MoviesServiceImpl();
 
     start(options?: any) {
         this.port = options?.port || this.port;
@@ -23,8 +27,9 @@ export class Server {
         this.readonly = options?.readonly || this.readonly;
         this.quiet = options?.quiet || false;
         this.delay = options?.delay ? parseInt(options.delay) : 0;
+        this.websockets = options?.websockets || false;
 
-        MoviesService.moviesFile = this.moviesFile;
+        this.moviesService.moviesFile = this.moviesFile;
 
         const app = express();
 
@@ -50,7 +55,7 @@ export class Server {
             try {
                 const format = request.headers.accept === 'text/yaml' ? 'yaml' : 'json';
                 if (reqParams.id) {
-                    const movie = await MoviesService.getMovie(reqParams.id);
+                    const movie = await this.moviesService.getMovie(reqParams.id);
                     if (movie) {
                         if (format === 'yaml') {
                             response.setHeader('Content-Type', 'text/yaml');
@@ -62,7 +67,7 @@ export class Server {
                         response.status(404).send(new StatusResponse(404, `Movie not found: ${reqParams.id}`));
                     }
                 } else {
-                    const movies = await MoviesService.getMovies(new Query(request));
+                    const movies = await this.moviesService.getMovies(new Query(request));
                     if (format === 'yaml') {
                         response.setHeader('Content-Type', 'text/yaml');
                         response.send(jsYaml.dump(movies, { indent: 2 }));
@@ -86,7 +91,7 @@ export class Server {
             } else {
                 try {
                     const movie = new MovieValidator(request.body).validate();
-                    await MoviesService.createMovie(movie);
+                    await this.moviesService.createMovie(movie);
                     console.log(`Movie created with id: ${movie.id}`);
                     const base = request.protocol + '://' + request.get('host');
                     response.set('Location', `${base}/movies/${movie.id}`);
@@ -111,7 +116,7 @@ export class Server {
                 notAllowed(request, response);
             } else {
                 try {
-                    const existing = await MoviesService.getMovie(request.params.id);
+                    const existing = await this.moviesService.getMovie(request.params.id);
                     if (existing) {
                         const movie = new MovieValidator(request.body).validate();
                         if (movie.id) {
@@ -122,7 +127,7 @@ export class Server {
                         else {
                             movie.id = existing.id;
                         }
-                        await MoviesService.updateMovie(movie);
+                        await this.moviesService.updateMovie(movie);
                         response.send(new StatusResponse());
                     }
                     else {
@@ -148,7 +153,7 @@ export class Server {
                 notAllowed(request, response);
             } else {
                 try {
-                    const existing = await MoviesService.getMovie(request.params.id);
+                    const existing = await this.moviesService.getMovie(request.params.id);
                     if (existing) {
                         let movie = { ...existing, ...request.body };
                         movie = new MovieValidator(movie).validate();
@@ -160,7 +165,7 @@ export class Server {
                         else {
                             movie.id = existing.id;
                         }
-                        await MoviesService.updateMovie(movie);
+                        await this.moviesService.updateMovie(movie);
                         response.send(new StatusResponse());
                     }
                     else {
@@ -186,9 +191,9 @@ export class Server {
                 notAllowed(request, response);
             } else {
                 try {
-                    const existing = await MoviesService.getMovie(request.params.id);
+                    const existing = await this.moviesService.getMovie(request.params.id);
                     if (existing) {
-                        await MoviesService.deleteMovie(request.params.id);
+                        await this.moviesService.deleteMovie(request.params.id);
                         response.send(new StatusResponse());
                     }
                     else {
@@ -215,7 +220,13 @@ export class Server {
             }
         });
 
-        const server = app.listen(this.port, () => {
+        const server = http.createServer(app);
+        if (this.websockets) {
+            const wsServer = new WsServer(server);
+            this.moviesService.updateListener = wsServer;
+        }
+
+        server.listen(this.port, () => {
             if (!this.quiet) {
                 console.log(`Movies API server listening at http://localhost:${this.port}`);
             }

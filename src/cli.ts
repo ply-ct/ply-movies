@@ -15,6 +15,7 @@ const startCmd = new Command()
     .option('-r, --readonly', 'flag to disallow POST, PUT, PATCH and DELETE requests')
     .option('-q, --quiet', 'quiet startup')
     .option('-d, --delay <ms>', 'delay responses')
+    .option('--websockets', 'enable websocket updates')
     .action(options => {
         server.start(options);
     });

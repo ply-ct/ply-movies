@@ -26,6 +26,7 @@ Stop:
 | --file | MOVIES_FILE | movies.json | Location of writeable movies JSON file (created on first update) |
 | --readonly | READONLY_API | false | Disallow POST, PUT, PATCH and DELETE requests |
 | --delay | | 0 | Impose a delay in milliseconds on response |
+| --websockets | | false | Allow websocket subscribers
 
 For example: `ply-movies start -p 3001`
 
@@ -103,5 +104,10 @@ Create a movie by posting to `/movies`:
   }
 }
 ```
+
+## WebSocket updates
+Subscribe to movie updates on a WebSocket:
+`/updates`
+
 ## More examples
 See Ply tests in the [ply-demo](https://github.com/ply-ct/ply-demo) repository.

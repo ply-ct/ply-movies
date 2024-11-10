@@ -4,10 +4,21 @@ import { Movie, MovieMatcher } from './movie';
 import { Query } from './query';
 import { ValidationError } from './validate';
 
-class MoviesServiceImpl {
+export interface MovieUpdate {
+    action: 'create' | 'update' | 'delete';
+    movie: Movie;
+}
+
+export interface MovieUpdateListener {
+    onMovieUpdate: (update: MovieUpdate) => void;
+}
+
+export class MoviesServiceImpl {
 
     private _moviesFile = 'movies.json';
     private _movies?: Movie[];
+
+    private _updateListener?: MovieUpdateListener;
 
     async getMovie(id: string): Promise<Movie | undefined> {
         const movies = await this.getMovies();
@@ -66,6 +77,7 @@ class MoviesServiceImpl {
         movie.id = id;
         movies.push(movie);
         this.save(movies);
+        this._updateListener?.onMovieUpdate({action: 'create', movie});
     }
 
     /**
@@ -79,6 +91,7 @@ class MoviesServiceImpl {
         }
         movies[idx] = movie;
         this.save(movies);
+        this._updateListener?.onMovieUpdate({action: 'update', movie});
     }
 
     async deleteMovie(id: string): Promise<void> {
@@ -87,8 +100,9 @@ class MoviesServiceImpl {
         if (idx === -1) {
             throw new ValidationError(`Movie not found with id: ${id}`, 404);
         }
-        movies.splice(idx, 1);
+        const deleted = movies.splice(idx, 1);
         this.save(movies);
+        this._updateListener?.onMovieUpdate({action: 'delete', movie: deleted[0]});
     }
 
     async save(movies: Movie[]): Promise<void> {
@@ -106,6 +120,10 @@ class MoviesServiceImpl {
         this._moviesFile = file;
     }
 
+    set updateListener(listener: MovieUpdateListener | undefined)  {
+        this._updateListener = listener;
+    }
+
     /**
      * Compatible with Java's hashCode
      * https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0
@@ -119,5 +137,3 @@ class MoviesServiceImpl {
     }
 
 }
-
-export const MoviesService = new MoviesServiceImpl();

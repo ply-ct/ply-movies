@@ -26,6 +26,7 @@ Stop:
 | --file | MOVIES_FILE | movies.json | Location of writeable movies JSON file (created on first update) |
 | --readonly | READONLY_API | false | Disallow POST, PUT, PATCH and DELETE requests |
 | --delay | | 0 | Impose a delay in milliseconds on response |
+| --quiet | | false | Quiet server startup
 | --websockets | | false | Allow websocket subscribers
 
 For example: `ply-movies start -p 3001`
